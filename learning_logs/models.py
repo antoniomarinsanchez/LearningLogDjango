@@ -1,5 +1,6 @@
 from django.db import models
 
+
 class Topic(models.Model):
     """A topic which the user is learning about"""
     text = models.CharField(max_length=200)
@@ -8,3 +9,17 @@ class Topic(models.Model):
     def __str__(self):
         """Returns a representation of the model as string"""
         return self.text
+
+
+class Entry(models.Model):
+    """The especific diary entry of the user about a topic"""
+    topic = models.ForeignKey(Topic, on_delete=models.CASCADE)
+    text = models.TextField()
+    date_added = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name_plural = 'entries'
+
+    def __str__(self):
+        """Return a representation of the model as string"""
+        return f'{self.text[:50]}...'
